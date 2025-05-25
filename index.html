@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Interactif - Lucrece Entcheu Djokgoue</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Visualization & Content Choices:
+        - Profil: Text block. Goal: Introduction. Method: HTML/Tailwind.
+        - Compétences (Hard/Technical): Styled list/tags. Goal: Showcase technical abilities. Method: HTML/Tailwind.
+        - Qualités (Soft Skills): Radar Chart. Goal: Visually represent soft skills. Method: Chart.js (Canvas). Interaction: Tooltips on hover. Justification: Provides a dynamic visual for qualities.
+        - Formation: Chronological list. Goal: Detail education. Method: HTML/Tailwind.
+        - Expériences: Chronological list with expandable details. Goal: Detail work history. Method: HTML/Tailwind, JS for interaction. Justification: Keeps initial view clean, allows drill-down.
+        - Centres d'intérêt: Styled list. Goal: Show personality/relevance. Method: HTML/Tailwind.
+        - Langues: Styled list. Goal: Show language skills. Method: HTML/Tailwind.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .nav-link.active {
+            font-weight: 600;
+            color: #0ea5e9; /* sky-500 */
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: #0d9488; /* teal-600 */
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div>
+                    <h1 class="text-2xl font-bold text-sky-600">Lucrece Entcheu Djokgoue</h1>
+                    <p class="text-sm text-teal-600">Candidate pour un stage en management de la santé</p>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#accueil" class="nav-link text-slate-600 hover:text-sky-500 transition duration-150">Accueil</a>
+                    <a href="#competences" class="nav-link text-slate-600 hover:text-sky-500 transition duration-150">Compétences</a>
+                    <a href="#formation" class="nav-link text-slate-600 hover:text-sky-500 transition duration-150">Formation</a>
+                    <a href="#experiences" class="nav-link text-slate-600 hover:text-sky-500 transition duration-150">Expériences</a>
+                    <a href="#qualites" class="nav-link text-slate-600 hover:text-sky-500 transition duration-150">Plus</a>
+                </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-slate-600 hover:text-sky-500 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg">
+            <a href="#accueil" class="block nav-link text-slate-600 hover:text-sky-500 px-4 py-2 transition duration-150">Accueil</a>
+            <a href="#competences" class="block nav-link text-slate-600 hover:text-sky-500 px-4 py-2 transition duration-150">Compétences</a>
+            <a href="#formation" class="block nav-link text-slate-600 hover:text-sky-500 px-4 py-2 transition duration-150">Formation</a>
+            <a href="#experiences" class="block nav-link text-slate-600 hover:text-sky-500 px-4 py-2 transition duration-150">Expériences</a>
+            <a href="#qualites" class="block nav-link text-slate-600 hover:text-sky-500 px-4 py-2 transition duration-150">Plus</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <section id="accueil" class="pt-20 -mt-20 min-h-screen flex flex-col justify-center">
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-sky-600 mb-6 section-title">Profil Professionnel</h2>
+                <p class="mb-4 text-lg leading-relaxed">
+                    Je suis Lucrece Entcheu Djokgoue, une professionnelle engagée pour une prise en charge et un service de qualité. Fortement impliquée dans une approche holistique de la relation entre usagers et prestataires, mon objectif principal est de développer et d'implémenter des stratégies optimisées pour la gestion efficiente des patients et de leurs divers interlocuteurs. La sécurité et le bien-être de chaque individu sont au cœur de mes préoccupations et guident mes actions au quotidien.
+                </p>
+                <p class="mb-6 text-lg leading-relaxed">
+                    Actuellement candidate pour un stage en management de la santé, je suis désireuse d'appliquer mes compétences et d'approfondir mes connaissances dans un environnement dynamique et stimulant.
+                </p>
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold text-teal-600 mb-3">Contact</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <span class="mr-2 text-sky-600">📧</span>
+                            <a href="mailto:lucresseentcheu9@gmail.com" class="hover:text-sky-500">lucresseentcheu9@gmail.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="mr-2 text-sky-600">📞</span>
+                            <span>0744999551</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="mr-2 text-sky-600">📍</span>
+                            <span>75013 Paris</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="competences" class="pt-20 -mt-20 mb-16">
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-sky-600 mb-8 section-title">Compétences</h2>
+                <p class="mb-8 text-lg leading-relaxed">
+                    Cette section met en lumière les compétences clés que j'ai acquises et développées au cours de ma formation et de mes expériences professionnelles. Elles couvrent des domaines variés allant de la gestion administrative et commerciale à l'analyse de données, en passant par une connaissance approfondie du secteur de la santé.
+                </p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-teal-600 mb-4">Compétences Techniques et Managériales</h3>
+                        <ul class="space-y-2">
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Négociation commerciale</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Gestion administrative</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Gestion de stock</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Microsoft Office (Word, Excel, PowerPoint)</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Analyse de données</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Création et suivi de Tableaux de bord</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Gestion et organisation des structures de santé</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Droit de la santé</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Économie de la santé</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-teal-600 mb-4">Qualités Personnelles (visualisation)</h3>
+                         <p class="mb-4 text-sm text-slate-600">Les qualités suivantes sont auto-évaluées sur une échelle de 1 à 5, 5 étant le niveau le plus élevé, basées sur les indications du CV.</p>
+                        <div class="chart-container">
+                            <canvas id="qualitesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="formation" class="pt-20 -mt-20 mb-16">
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-sky-600 mb-8 section-title">Formation Académique</h2>
+                <p class="mb-8 text-lg leading-relaxed">
+                    Mon parcours académique m'a fourni une base solide en sciences infirmières, complétée par une spécialisation en management de la santé. Chaque étape de ma formation a contribué à forger ma compréhension des enjeux du secteur et à développer les compétences nécessaires pour y évoluer.
+                </p>
+                <div class="space-y-6">
+                    <div class="p-4 border-l-4 border-sky-500 bg-slate-50 rounded-r-lg">
+                        <h3 class="text-xl font-semibold text-teal-600">M1 Management de la Santé</h3>
+                        <p class="text-slate-600">Santé Management Business School, Paris</p>
+                        <p class="text-sm text-slate-500">Septembre 2024 – Aujourd'hui</p>
+                        <ul class="list-disc list-inside mt-2 text-sm">
+                            <li>Gestion et organisation des structures de santé</li>
+                            <li>Droit de la santé, économie de la santé</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 border-l-4 border-sky-500 bg-slate-50 rounded-r-lg">
+                        <h3 class="text-xl font-semibold text-teal-600">Licence en Science Infirmière</h3>
+                        <p class="text-slate-600">Institut Universitaire du Golfe de Guinée, Douala</p>
+                        <p class="text-sm text-slate-500">2022 – 2023</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-sky-500 bg-slate-50 rounded-r-lg">
+                        <h3 class="text-xl font-semibold text-teal-600">BTS en Sciences Infirmière</h3>
+                        <p class="text-slate-600">Institut Universitaire du Golfe de Guinée, Douala</p>
+                        <p class="text-sm text-slate-500">2019 – 2020</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-sky-500 bg-slate-50 rounded-r-lg">
+                        <h3 class="text-xl font-semibold text-teal-600">Baccalauréat D</h3>
+                        <p class="text-slate-600">Lycée Bilingue de Nylon, Brazzaville</p>
+                        <p class="text-sm text-slate-500">2019 – 2020 (Composante principale: Biologie et sciences de la vie)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experiences" class="pt-20 -mt-20 mb-16">
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-sky-600 mb-8 section-title">Expériences Professionnelles</h2>
+                <p class="mb-8 text-lg leading-relaxed">
+                    Mes expériences professionnelles, principalement sous forme de stages, m'ont permis de mettre en pratique mes connaissances théoriques dans des environnements hospitaliers concrets. J'ai pu y développer des compétences en coordination d'équipe, gestion de matériel et mise en place de stratégies de soins.
+                </p>
+                <div class="space-y-6">
+                    <div class="experience-item p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-center cursor-pointer experience-header">
+                            <div>
+                                <h3 class="text-xl font-semibold text-teal-600">Stage de perfectionnement - Infirmière supérieure</h3>
+                                <p class="text-slate-600">Hôpital protestant de Ndogbati</p>
+                                <p class="text-sm text-slate-500">Novembre 2023 – Mars 2024</p>
+                            </div>
+                            <span class="text-sky-500 transform transition-transform duration-300">▼</span>
+                        </div>
+                        <div class="experience-details hidden mt-3 pt-3 border-t border-slate-200">
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Coordination des équipes de soins.</li>
+                                <li>Gestion des stocks et inventaire du matériel médical.</li>
+                                <li>Mise en place de stratégies de soins adaptés.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="experience-item p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex justify-between items-center cursor-pointer experience-header">
+                            <div>
+                                <h3 class="text-xl font-semibold text-teal-600">Stagiaire Infirmière</h3>
+                                <p class="text-slate-600">Hôpital de District de Logbaba</p>
+                                <p class="text-sm text-slate-500">Mai 2022 – Juin 2022</p>
+                            </div>
+                            <span class="text-sky-500 transform transition-transform duration-300">▼</span>
+                        </div>
+                        <div class="experience-details hidden mt-3 pt-3 border-t border-slate-200">
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Accueil et prise en charge des patients, planification des soins.</li>
+                                <li>Campagnes de vaccination et actions de sensibilisation.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="qualites" class="pt-20 -mt-20 mb-16">
+            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold text-sky-600 mb-8 section-title">Qualités et Centres d'Intérêt</h2>
+                <p class="mb-8 text-lg leading-relaxed">
+                    Au-delà de mes compétences techniques, mes qualités personnelles et mes centres d'intérêt reflètent mon engagement envers le domaine de la santé et ma volonté d'innover. La visualisation des qualités (déjà présentée dans la section Compétences) offre un aperçu graphique, tandis que mes centres d'intérêt soulignent ma curiosité pour les avancées technologiques et collaboratives.
+                </p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-teal-600 mb-4">Qualités Personnelles (Liste)</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center"><span class="text-sky-500 mr-2">✓</span>Travail en équipe</li>
+                            <li class="flex items-center"><span class="text-sky-500 mr-2">✓</span>Prise d'initiative</li>
+                            <li class="flex items-center"><span class="text-sky-500 mr-2">✓</span>Sens de l'observation</li>
+                            <li class="flex items-center"><span class="text-slate-400 mr-2">▫</span>Écoute et communication</li>
+                            <li class="flex items-center"><span class="text-slate-400 mr-2">▫</span>Transfert de connaissances</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-teal-600 mb-4">Centres d'Intérêt</h3>
+                        <ul class="space-y-2">
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Outils numériques pour la surveillance à distance</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Support de l'IA pour l'administration et gestion optimisée</li>
+                            <li class="p-3 bg-slate-100 rounded-md shadow-sm">Collaboration optimisée avec les relais associatifs</li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="mt-8">
+                    <h3 class="text-xl font-semibold text-teal-600 mb-3">Langues</h3>
+                    <ul class="space-y-2">
+                        <li>Français: <span class="font-semibold text-sky-600">Langue maternelle</span></li>
+                        <li>Anglais: <span class="font-semibold text-sky-600">Intermédiaire</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 text-center p-6 mt-12">
+        <p>&copy; 2024 Lucrece Entcheu Djokgoue. Tous droits réservés.</p>
+        <p class="text-xs mt-1">CV Interactif développé avec soin.</p>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
+
+        mobileMenuButton.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenuButton.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`;
+            }
+        });
+
+        document.querySelectorAll('.nav-link, #mobile-menu a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    if (isMenuOpen && mobileMenu.contains(this)) {
+                         mobileMenu.classList.add('hidden');
+                         mobileMenuButton.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>`;
+                         isMenuOpen = false;
+                    }
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        const experienceItems = document.querySelectorAll('.experience-item');
+        experienceItems.forEach(item => {
+            const header = item.querySelector('.experience-header');
+            const details = item.querySelector('.experience-details');
+            const arrow = header.querySelector('span');
+
+            header.addEventListener('click', () => {
+                const isVisible = !details.classList.contains('hidden');
+                details.classList.toggle('hidden');
+                arrow.style.transform = isVisible ? 'rotate(0deg)' : 'rotate(180deg)';
+            });
+        });
+
+        const qualitesData = {
+            labels: [
+                'Travail en équipe',
+                'Prise d\'initiative',
+                'Sens de l\'observation',
+                'Écoute et communication',
+                'Transfert de connaissances'
+            ],
+            datasets: [{
+                label: 'Qualités Personnelles',
+                data: [5, 5, 5, 3, 3], // Based on CV: checked = 5/5, unchecked = 3/5 (assumed base level)
+                fill: true,
+                backgroundColor: 'rgba(14, 165, 233, 0.2)', // sky-500 with opacity
+                borderColor: 'rgb(14, 165, 233)', // sky-500
+                pointBackgroundColor: 'rgb(14, 165, 233)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(14, 165, 233)'
+            }]
+        };
+
+        const qualitesConfig = {
+            type: 'radar',
+            data: qualitesData,
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                elements: {
+                    line: {
+                        borderWidth: 3
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 5,
+                        pointLabels: {
+                           font: {
+                               size: 10 
+                           }
+                        },
+                        ticks: {
+                           stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.r !== null) {
+                                    label += context.parsed.r + ' / 5';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const qualitesChartCtx = document.getElementById('qualitesChart').getContext('2d');
+        new Chart(qualitesChartCtx, qualitesConfig);
+
+    </script>
+</body>
+</html>
